@@ -1,14 +1,25 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
-import path from 'path';
+import { platform } from 'os';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { DefinePlugin } from 'webpack';
+import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 import dotenv from 'dotenv';
+
+import postcssPlugins from './postcss.config.js';
 
 dotenv.config({
 	path: path.join(process.cwd(), process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env'),
 });
+
+const normalizePath = (pathToNormalize) => {
+	return platform() === 'win32' ? pathToNormalize.split('\\').join('/') : pathToNormalize;
+};
+
+const formattedDirname =
+	platform() === 'win32' ? normalizePath(dirname(fileURLToPath(import.meta.url))) : dirname(fileURLToPath(import.meta.url));
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -18,7 +29,7 @@ const config = {
 	entry: './src/index.ts',
 	devtool: 'source-map',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(formattedDirname, 'dist'),
 	},
 	devServer: {
 		open: true,
@@ -35,7 +46,7 @@ const config = {
 
 		// Add your plugins here
 		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
-		new DefinePlugin({
+		new webpack.DefinePlugin({
 			'process.env.DEVELOPMENT': !isProduction,
 			'process.env.API_ORIGIN': JSON.stringify(process.env.API_ORIGIN ?? ''),
 		}),
@@ -52,7 +63,14 @@ const config = {
 				use: [
 					stylesHandler,
 					'css-loader',
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: postcssPlugins,
+							},
+						},
+					},
 					'resolve-url-loader',
 					{
 						loader: 'sass-loader',
@@ -67,7 +85,18 @@ const config = {
 			},
 			{
 				test: /\.css$/i,
-				use: [stylesHandler, 'css-loader', 'postcss-loader'],
+				use: [
+					stylesHandler,
+					'css-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: postcssPlugins,
+							},
+						},
+					},
+				],
 			},
 			{
 				test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -94,7 +123,7 @@ const config = {
 	},
 };
 
-module.exports = () => {
+export default () => {
 	if (isProduction) {
 		config.mode = 'production';
 	} else {

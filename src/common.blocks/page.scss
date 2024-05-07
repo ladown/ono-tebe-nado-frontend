@@ -1,7 +1,8 @@
-@use "variables" as *;
-@use "mixins";
+@use 'variables' as *;
+@use 'mixins';
 
-html, body.page {
+html,
+body.page {
 	height: 100%;
 	font-family: $font;
 	font-size: $baseFontSize;
@@ -19,6 +20,7 @@ html, body.page {
 
 .page__container {
 	@include mixins.flex(column);
-	padding: $defaultPadding 0;
+
 	gap: 3rem;
+	padding: $defaultPadding 0;
 }

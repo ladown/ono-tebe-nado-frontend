@@ -1,33 +1,36 @@
-@use "variables" as *;
-@use "mixins";
+@use 'variables' as *;
+@use 'mixins';
 
 .basket {
-  @include mixins.flex(column);
-  gap: 2rem;
+	@include mixins.flex(column);
 
-  &__list {
-    @include mixins.flex(column);
-    gap: 2rem;
-  }
+	gap: 2rem;
 
-  &__item {
+	&__list {
+		@include mixins.flex(column);
 
-  }
+		gap: 2rem;
+	}
 
-  &__actions {
-    @include mixins.flex(row);
-    justify-content: flex-end;
-    align-items: center;
-    border-top: 1px solid #232427;
-    padding-top: 2rem;
-    gap: 2rem;
-  }
+	&__item {
+	}
 
-  &__total {
-    font-size: 1.5rem;
-    font-weight: 500;
-    &::after {
-        content: " ₽";
-    }
-  }
+	&__actions {
+		@include mixins.flex(row);
+
+		gap: 2rem;
+		align-items: center;
+		justify-content: flex-end;
+		padding-top: 2rem;
+		border-top: 1px solid #232427;
+	}
+
+	&__total {
+		font-size: 1.5rem;
+		font-weight: 500;
+
+		&::after {
+			content: ' ₽';
+		}
+	}
 }

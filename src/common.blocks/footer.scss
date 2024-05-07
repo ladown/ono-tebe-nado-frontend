@@ -1,37 +1,39 @@
-@use "variables" as *;
-@use "mixins";
+@use 'variables' as *;
+@use 'mixins';
 
 .footer {
-  background-color: $secondaryBackground;
+	background-color: $secondaryBackground;
 
-  &__container {
-    @include mixins.container(1rem, 1rem, 0);
-    @include mixins.flex(row);
-    justify-content: space-between;
-    align-items: center;
-  }
+	&__container {
+		@include mixins.container(1rem, 1rem, 0);
+		@include mixins.flex(row);
 
-  &__logo {
-    height: $headerElementsSize;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-    &-image {
-      display: block;
-      height: 100%;
-    }
-  }
+	&__logo {
+		height: $headerElementsSize;
 
-  &__menu {
-    display: flex;
-    gap: 2.5rem;
-    font-size: 1rem;
-    font-weight: 400;
-  }
+		&-image {
+			display: block;
+			height: 100%;
+		}
+	}
 
-  &__menu-item {
-    color: $secondary;
-    text-decoration: none;
-    &:hover {
-      color: $hover;
-    }
-  }
+	&__menu {
+		display: flex;
+		gap: 2.5rem;
+		font-size: 1rem;
+		font-weight: 400;
+	}
+
+	&__menu-item {
+		color: $secondary;
+		text-decoration: none;
+
+		&:hover {
+			color: $hover;
+		}
+	}
 }

@@ -1,114 +1,122 @@
-@use "variables" as *;
-@use "mixins";
+@use 'variables' as *;
+@use 'mixins';
 
 .lot {
-  @include mixins.flex(column);
-  gap: 3rem;
-  background-color: white;
-  border-radius: $borderRadius;
-  padding: $defaultPadding;
-  box-sizing: border-box;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
+	@include mixins.flex(column);
 
-  &__status {
-    @include mixins.flex(column);
-    gap: 3rem;
-  }
+	position: relative;
+	box-sizing: border-box;
+	gap: 3rem;
+	justify-content: space-between;
+	padding: $defaultPadding;
+	overflow: hidden;
+	background-color: #fff;
+	border-radius: $borderRadius;
 
-  &__content {
-    @include mixins.flex(column);
-    gap: 0.5rem;
-    z-index: 1;
-  }
+	&__status {
+		@include mixins.flex(column);
 
-  &__foot {
-    @include mixins.flex(row);
-    align-items: center;
-    gap: 1.5rem;
-    z-index: 1;
-  }
+		gap: 3rem;
+	}
 
-  &__image {
-    width: 411px;
-    height: 411px;
-    margin: 0 auto;
-  }
+	&__content {
+		@include mixins.flex(column);
 
-  &__title {
-    font-size: 2rem;
-    font-weight: 500;
-    margin: 0;
-  }
+		z-index: 1;
+		gap: 0.5rem;
+	}
 
-  &__description {
-    margin: 0.75rem 0;
-  }
+	&__foot {
+		@include mixins.flex(row);
 
-  &__auction {
-    @include mixins.flex(column);
-    align-items: center;
+		z-index: 1;
+		gap: 1.5rem;
+		align-items: center;
+	}
 
-    &-timer {
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
+	&__image {
+		width: 411px;
+		height: 411px;
+		margin: 0 auto;
+	}
 
-    &-text {
-      font-size: 1.5rem;
-      font-weight: 500;
-    }
-  }
+	&__title {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 500;
+	}
 
-  &__bid {
-    flex-direction: row;
-    padding: 0 $defaultPadding;
+	&__description {
+		margin: 0.75rem 0;
+	}
 
-    &-amount {
-      @include mixins.flex(row);
-      > * {
-        text-align: right;
-      }
+	&__auction {
+		@include mixins.flex(column);
 
-      &::after {
-        content: ' ₽';
-        padding: 1rem;
-        font-size: 1.4rem;
-      }
-    }
-  }
+		align-items: center;
 
-  &__history {
-    @include mixins.flex(column);
-    border-top: 1px solid #232427;
-    cursor: default;
+		&-timer {
+			font-size: 2.5rem;
+			font-weight: 700;
+		}
 
-    &-caption {
-      opacity: 0.5;
-      margin: 1rem 0;
-    }
+		&-text {
+			font-size: 1.5rem;
+			font-weight: 500;
+		}
+	}
 
-    &-bids {
-      @include mixins.flex(row);
-      gap: 3rem;
-      margin: 0;
-      padding: 0;
-    }
+	&__bid {
+		flex-direction: row;
+		padding: 0 $defaultPadding;
 
-    &-item {
-      font-size: 1.5rem;
-      font-weight: 500;
-      padding-left: 1.5rem;
+		&-amount {
+			@include mixins.flex(row);
 
-      &:first-child {
-        list-style: none;
-        padding-left: 0;
-      }
+			> * {
+				text-align: right;
+			}
 
-      &::after {
-        content: ' ₽';
-      }
-    }
-  }
+			&::after {
+				padding: 1rem;
+				font-size: 1.4rem;
+				content: ' ₽';
+			}
+		}
+	}
+
+	&__history {
+		@include mixins.flex(column);
+
+		cursor: default;
+		border-top: 1px solid #232427;
+
+		&-caption {
+			margin: 1rem 0;
+			opacity: 0.5;
+		}
+
+		&-bids {
+			@include mixins.flex(row);
+
+			gap: 3rem;
+			padding: 0;
+			margin: 0;
+		}
+
+		&-item {
+			padding-left: 1.5rem;
+			font-size: 1.5rem;
+			font-weight: 500;
+
+			&:first-child {
+				padding-left: 0;
+				list-style: none;
+			}
+
+			&::after {
+				content: ' ₽';
+			}
+		}
+	}
 }

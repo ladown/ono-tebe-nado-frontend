@@ -1,69 +1,71 @@
-@use "variables" as *;
-@use "mixins";
+@use 'variables' as *;
+@use 'mixins';
 
 .form {
-  @include mixins.flex(column);
-  gap: 1.5rem;
-  padding: $defaultPadding;
-  border-radius: 3rem;
+	@include mixins.flex(column);
 
-  &__label {
-    flex-grow: 1;
-    width: 100%;
-  }
+	gap: 1.5rem;
+	padding: $defaultPadding;
+	border-radius: 3rem;
 
-  &__input {
-    border: 1px solid $secondaryBackground;
-    border-radius: 1.5rem;
-    padding: 1rem;
-    font-size: 1.4rem;
-    width: 100%;
-    box-sizing: border-box;
-    outline-color: $secondary;
+	&__label {
+		flex-grow: 1;
+		width: 100%;
+	}
 
-    &:focus {
-      outline-style: solid;
-    }
+	&__input {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 1rem;
+		font-size: 1.4rem;
+		border: 1px solid $secondaryBackground;
+		border-radius: 1.5rem;
+		outline-color: $secondary;
 
-    &:invalid {
-      border-color: $error;
-      outline-color: $error;
-    }
+		&:focus {
+			outline-style: solid;
+		}
 
-    &::placeholder {
-      color: lighten($primaryLight, 23%);
-    }
-  }
+		&:invalid {
+			border-color: $error;
+			outline-color: $error;
+		}
 
-  &__label_grouped {
-    border: 1px solid $secondaryBackground;
-    border-radius: 1.5rem;
+		&::placeholder {
+			color: color.adjust($primaryLight, $lightness: 23%);
+		}
+	}
 
-    .form__input {
-      border: 0;
+	&__label_grouped {
+		border: 1px solid $secondaryBackground;
+		border-radius: 1.5rem;
 
-      &:focus {
-        outline-style: none;
-      }
-    }
+		.form__input {
+			border: 0;
 
-    &:has(.form__input:focus) {
-      outline: 1px solid $secondary;
-    }
+			&:focus {
+				outline-style: none;
+			}
+		}
 
-    &:has(.form__input:invalid) {
-      border-color: $error;
-      outline-color: $error;
-    }
-  }
+		&:has(.form__input:focus) {
+			outline: 1px solid $secondary;
+		}
 
-  &__footer {
-    @include mixins.flex(row);
-    align-items: center;
-    gap: 1rem;
-  }
+		&:has(.form__input:invalid) {
+			border-color: $error;
+			outline-color: $error;
+		}
+	}
 
-  &__errors {
-    color: $error;
-  }
+	&__footer {
+		@include mixins.flex(row);
+
+		gap: 1rem;
+		align-items: center;
+	}
+
+	&__errors {
+		color: $error;
+	}
 }

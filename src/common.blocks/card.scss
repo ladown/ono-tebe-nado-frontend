@@ -1,60 +1,63 @@
-@use "variables" as *;
-@use "mixins";
+@use 'variables' as *;
+@use 'mixins';
 
 .card {
-  @include mixins.flex(column);
-  background-color: white;
-  border-radius: $borderRadius;
-  padding: $defaultPadding 15rem $defaultPadding $defaultPadding;
-  height: 27.25rem;
-  box-sizing: border-box;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
+	@include mixins.flex(column);
 
-  &__content {
-    @include mixins.flex(column);
-    gap: 0.5rem;
-    z-index: 1;
-  }
+	position: relative;
+	box-sizing: border-box;
+	justify-content: space-between;
+	height: 27.25rem;
+	padding: $defaultPadding 15rem $defaultPadding $defaultPadding;
+	overflow: hidden;
+	background-color: #fff;
+	border-radius: $borderRadius;
 
-  &__foot {
-    @include mixins.flex(row);
-    align-items: center;
-    gap: 1.5rem;
-    z-index: 1;
-  }
+	&__content {
+		@include mixins.flex(column);
 
-  &__image {
-    position: absolute;
-    width: 411px;
-    height: 411px;
-    right: -141px;
-  }
+		z-index: 1;
+		gap: 0.5rem;
+	}
 
-  &__title {
-    font-size: 2rem;
-    font-weight: 500;
-    margin: 0;
-  }
+	&__foot {
+		@include mixins.flex(row);
 
-  &__description {
-    margin: 0;
-  }
+		z-index: 1;
+		gap: 1.5rem;
+		align-items: center;
+	}
 
-  &__status {
-    color: $statusDefault;
+	&__image {
+		position: absolute;
+		right: -141px;
+		width: 411px;
+		height: 411px;
+	}
 
-    &_active {
-      color: $statusOpened;
-    }
+	&__title {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 500;
+	}
 
-    &_closed {
-      color: $statusClosed;
-    }
+	&__description {
+		margin: 0;
+	}
 
-    &::before {
-      content: '• ';
-    }
-  }
+	&__status {
+		color: $statusDefault;
+
+		&_active {
+			color: $statusOpened;
+		}
+
+		&_closed {
+			color: $statusClosed;
+		}
+
+		&::before {
+			content: '• ';
+		}
+	}
 }

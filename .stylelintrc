@@ -1,0 +1,21 @@
+{
+	"extends": ["@gitlab/stylelint-config", "stylelint-config-standard-scss", "stylelint-config-recess-order"],
+	"plugins": ["stylelint-prettier"],
+	"rules": {
+		"prettier/prettier": true,
+		"selector-attribute-quotes": "always",
+		"scss/dollar-variable-pattern": null,
+		"function-url-quotes": "always",
+		"media-feature-range-notation": "prefix",
+		"value-keyword-case": ["lower", { "camelCaseSvgKeywords": true }],
+		"value-no-vendor-prefix": null,
+		"property-no-vendor-prefix": null,
+		"selector-class-pattern": null,
+		"no-descending-specificity": null,
+		"block-no-empty": null,
+		"no-empty-source": null,
+		"selector-max-compound-selectors": null,
+		"scale-unlimited/declaration-strict-value": null,
+		"max-nesting-depth": null
+	}
+}

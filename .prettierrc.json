@@ -1,9 +1,20 @@
 {
-	"tabWidth": 2,
-	"useTabs": true,
-	"printWidth": 80,
-	"semi": true,
-	"trailingComma": "es5",
+	"tabWidth": 4,
 	"singleQuote": true,
-	"endOfLine": "lf"
+	"trailingComma": "all",
+	"semi": true,
+	"printWidth": 130,
+	"useTabs": true,
+	"jsxSingleQuote": true,
+	"endOfLine": "auto",
+	"bracketSameLine": false,
+	"htmlWhitespaceSensitivity": "ignore",
+	"overrides": [
+		{
+			"files": [".eslintrc"],
+			"options": {
+				"parser": "json"
+			}
+		}
+	]
 }

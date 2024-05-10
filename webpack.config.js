@@ -1,18 +1,12 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
 import { platform } from 'os';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
-import dotenv from 'dotenv';
+import Dotenv from 'dotenv-webpack';
 
 import postcssPlugins from './postcss.config.js';
-
-dotenv.config({
-	path: path.join(process.cwd(), process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env'),
-});
 
 const normalizePath = (pathToNormalize) => {
 	return platform() === 'win32' ? pathToNormalize.split('\\').join('/') : pathToNormalize;
@@ -44,12 +38,7 @@ const config = {
 
 		new MiniCssExtractPlugin(),
 
-		// Add your plugins here
-		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
-		new webpack.DefinePlugin({
-			'process.env.DEVELOPMENT': !isProduction,
-			'process.env.API_ORIGIN': JSON.stringify(process.env.API_ORIGIN ?? ''),
-		}),
+		new Dotenv(),
 	],
 	module: {
 		rules: [

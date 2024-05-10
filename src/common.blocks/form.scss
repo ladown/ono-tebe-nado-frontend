@@ -6,7 +6,7 @@
 	@include mixins.flex(column);
 
 	gap: 1.5rem;
-	padding: $defaultPadding;
+	padding: calc(#{$defaultPadding} / 2);
 	border-radius: 3rem;
 
 	&__label {

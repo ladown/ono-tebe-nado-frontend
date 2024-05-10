@@ -17,18 +17,18 @@ export class AuctionAPI extends Api implements IAuctionAPI {
 		this.cdn = cdn;
 	}
 
-	getLotItem(id: string): Promise<ILot> {
+	async getLotItem(id: string): Promise<ILot> {
 		return this.get(`/lot/${id}`).then((item: ILot) => ({
 			...item,
 			image: this.cdn + item.image,
 		}));
 	}
 
-	getLotUpdate(id: string): Promise<LotUpdate> {
+	async getLotUpdate(id: string): Promise<LotUpdate> {
 		return this.get(`/lot/${id}/_auction`).then((data: LotUpdate) => data);
 	}
 
-	getLotList(): Promise<ILot[]> {
+	async getLotList(): Promise<ILot[]> {
 		return this.get('/lot').then((data: ApiListResponse<ILot>) =>
 			data.items.map((item) => ({
 				...item,
@@ -37,11 +37,11 @@ export class AuctionAPI extends Api implements IAuctionAPI {
 		);
 	}
 
-	placeBid(id: string, bid: IBid): Promise<LotUpdate> {
+	async placeBid(id: string, bid: IBid): Promise<LotUpdate> {
 		return this.post(`/lot/${id}/_bid`, bid).then((data: ILot) => data);
 	}
 
-	orderLots(order: IOrder): Promise<IOrderResult> {
+	async orderLots(order: IOrder): Promise<IOrderResult> {
 		return this.post('/order', order).then((data: IOrderResult) => data);
 	}
 }

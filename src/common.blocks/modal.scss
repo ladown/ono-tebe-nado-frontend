@@ -2,16 +2,22 @@
 @use 'mixins';
 
 .modal {
-	@include mixins.sublayer;
-
-	position: absolute;
+	position: fixed;
+	inset: 0;
 	z-index: 100;
+	box-sizing: border-box;
 	display: none;
 	justify-content: center;
-	height: max-content;
 	padding-top: 5vh;
 	padding-bottom: 5vh;
-	background-color: $overlayBackground;
+	overflow-y: auto;
+
+	&::before {
+		position: fixed;
+		inset: 0;
+		content: '';
+		background-color: $overlayBackground;
+	}
 
 	&_active {
 		display: flex;
@@ -24,13 +30,15 @@
 		position: relative;
 		box-sizing: border-box;
 		gap: $defaultPadding;
-		min-height: 90vmin;
+		padding: 0;
+		margin: auto;
 		background-color: #fff;
 		border-radius: 3rem;
 	}
 
 	&__content {
 		flex-grow: 1;
+		padding: $defaultPadding;
 	}
 
 	&__close {

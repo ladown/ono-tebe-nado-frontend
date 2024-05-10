@@ -8,7 +8,7 @@ interface INotifyActions {
 export class Notify extends Component<HTMLElement> {
 	protected closeTrigger: HTMLButtonElement;
 
-	constructor(container: HTMLElement, actions: INotifyActions) {
+	constructor(container: HTMLElement, actions?: INotifyActions) {
 		super(container);
 
 		this.closeTrigger = ensureElement<HTMLButtonElement>(`.state__action`, container);

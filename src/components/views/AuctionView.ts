@@ -2,19 +2,19 @@ import { Component } from '../base/Component';
 import { ensureElement, formatNumber, createElement } from '../../utils/utils';
 import { LotStatus } from '../../types';
 
-export type TAuctionView = {
+export interface IAuctionView {
 	status: string;
 	time: string;
 	label: string;
 	nextBid: number;
 	history: number[];
-};
+}
 
 export interface IAuctionViewActions {
 	onSubmit(price: number): void;
 }
 
-export class AuctionView extends Component<TAuctionView> {
+export class AuctionView extends Component<IAuctionView> {
 	protected _timer: HTMLElement;
 	protected _label: HTMLElement;
 	protected _form: HTMLFormElement;
@@ -23,7 +23,7 @@ export class AuctionView extends Component<TAuctionView> {
 	protected _bids: HTMLUListElement;
 	protected _history: HTMLElement;
 
-	constructor(container: HTMLElement, actions: IAuctionViewActions) {
+	constructor(container: HTMLElement, actions?: IAuctionViewActions) {
 		super(container);
 
 		this._timer = ensureElement('.lot__auction-timer', container);

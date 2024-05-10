@@ -55,9 +55,9 @@ export class Basket extends Component<IBasket> {
 		}
 	}
 
-	set selected(items: string[]) {
+	set selected(value: string[]) {
 		if (this._button) {
-			if (items.length) {
+			if (value.length) {
 				this.setDisabled(this._button, false);
 			} else {
 				this.setDisabled(this._button, true);

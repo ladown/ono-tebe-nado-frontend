@@ -1,12 +1,8 @@
 import { Model } from '../base/Model';
-import { IAppState, ILot, IOrder, FormErrors, IOrderForm } from '../../types';
+import { IAppModel, ILot, IOrder, FormErrors, IOrderForm } from '../../types';
 import { CardModel } from './CardModel';
 
-export type CatalogChangeEvent = {
-	catalog: ILot[];
-};
-
-export class AppModel extends Model<IAppState> {
+export class AppModel extends Model<IAppModel> {
 	catalog: CardModel[];
 	basket: string[];
 	cardAuction: string | null;
@@ -17,14 +13,14 @@ export class AppModel extends Model<IAppState> {
 	};
 	formErrors: FormErrors = {};
 
-	setCatalog(items: ILot[]) {
-		this.catalog = items.map((item) => new CardModel(item, this.events));
+	setCatalog(value: ILot[]) {
+		this.catalog = value.map((item) => new CardModel(item, this.events));
 		this.emitChanges('catalog:changed', { catalog: this.catalog });
 	}
 
-	setCardAuction(item: CardModel) {
-		this.cardAuction = item.id;
-		this.emitChanges('card:show-preview', item);
+	setCardAuction(value: CardModel) {
+		this.cardAuction = value.id;
+		this.emitChanges('card:show-preview', value);
 	}
 
 	getClosedLots() {

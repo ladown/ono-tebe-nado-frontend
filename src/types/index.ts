@@ -8,7 +8,7 @@ export interface IAuction {
 	history?: number[];
 }
 
-export interface ILotItem {
+export interface ICardModel {
 	id: string;
 	title: string;
 	about: string;
@@ -16,7 +16,7 @@ export interface ILotItem {
 	image: string;
 }
 
-export type ILot = ILotItem & IAuction;
+export type ILot = ICardModel & IAuction;
 
 export type LotUpdate = Pick<ILot, 'id' | 'datetime' | 'status' | 'price' | 'history'>;
 
@@ -24,7 +24,7 @@ export type IBasketItem = Pick<ILot, 'id' | 'title' | 'price'> & {
 	isMyBid: boolean;
 };
 
-export interface IAppState {
+export interface IAppModel {
 	catalog: ILot[];
 	basket: string[];
 	preview: string | null;

@@ -26,10 +26,10 @@ export class Tabs extends Component<ITabs> {
 		}
 	}
 
-	set selected(name: string) {
+	set selected(value: string) {
 		this._buttons.forEach((button) => {
-			this.toggleClass(button, 'tabs__item_active', button.name === name);
-			this.setDisabled(button, button.name === name);
+			this.toggleClass(button, 'tabs__item_active', button.name === value);
+			this.setDisabled(button, button.name === value);
 		});
 	}
 }

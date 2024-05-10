@@ -1,9 +1,9 @@
 import { Model } from '../base/Model';
-import { ILotItem, LotStatus } from '../../types/index';
+import { ICardModel, LotStatus } from '../../types/index';
 import { dayjs, formatNumber } from '../../utils/utils';
 import { IEvents } from '../base/events.js';
 
-export class CardModel extends Model<ILotItem> {
+export class CardModel extends Model<ICardModel> {
 	id: string;
 	title: string;
 	about: string;
@@ -17,7 +17,7 @@ export class CardModel extends Model<ILotItem> {
 
 	protected myBid: number;
 
-	constructor(data: ILotItem, events: IEvents) {
+	constructor(data: ICardModel, events: IEvents) {
 		super(data, events);
 
 		this.myBid = 0;
@@ -27,16 +27,16 @@ export class CardModel extends Model<ILotItem> {
 		this.myBid = 0;
 	}
 
-	placeBid(bid: number) {
-		this.price = bid;
+	placeBid(value: number) {
+		this.price = value;
 		this.history = [...this.history, this.myBid];
-		this.myBid = bid;
+		this.myBid = value;
 
-		if (bid > this.minPrice * 10) {
+		if (value > this.minPrice * 10) {
 			this.status = 'closed';
 		}
 
-		this.emitChanges('auction:changed', { id: this.id, bid });
+		this.emitChanges('auction:changed', { id: this.id, value });
 	}
 
 	get isMyBid(): boolean {

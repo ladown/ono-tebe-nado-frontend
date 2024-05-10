@@ -56,7 +56,7 @@ export class CardModel extends Model<ICardModel> {
 	}
 
 	get statusLabel(): string {
-		const formattedDateTime = dayjs(this.datetime).format('D MMMM [в] HH:MM');
+		const formattedDateTime = dayjs(this.datetime).format('D MMMM [в] HH:mm');
 
 		switch (this.status) {
 			case 'active':

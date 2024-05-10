@@ -2,6 +2,8 @@
 
 Стек: HTML, SCSS, TS, Webpack
 
+GitHub Page: [https://ladown.github.io/ono-tebe-nado-frontend/](https://ladown.github.io/ono-tebe-nado-frontend/)
+
 Структура проекта:
 
 -   src/ — исходные файлы проекта

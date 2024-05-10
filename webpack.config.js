@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 
 import postcssPlugins from './postcss.config.js';
 
@@ -24,6 +25,7 @@ const config = {
 	devtool: 'source-map',
 	output: {
 		path: path.resolve(formattedDirname, 'dist'),
+		clean: true,
 	},
 	devServer: {
 		open: true,
@@ -32,6 +34,16 @@ const config = {
 		hot: true,
 	},
 	plugins: [
+		new CopyPlugin({
+			patterns: [
+				{
+					from: path.posix.join(formattedDirname, 'src/public/'),
+					noErrorOnMissing: true,
+					to: path.posix.join(formattedDirname, 'dist/'),
+				},
+			],
+		}),
+
 		new HtmlWebpackPlugin({
 			template: 'src/pages/index.html',
 		}),

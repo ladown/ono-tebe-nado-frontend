@@ -67,7 +67,7 @@
 	}
 
 	&__bid {
-		flex-direction: row;
+		flex-flow: row wrap;
 		padding: 0 $defaultPadding;
 
 		&-amount {
@@ -81,6 +81,12 @@
 				padding: 1rem;
 				font-size: 1.4rem;
 				content: ' ₽';
+			}
+		}
+
+		.form {
+			&__errors {
+				flex: 0 0 100%;
 			}
 		}
 	}

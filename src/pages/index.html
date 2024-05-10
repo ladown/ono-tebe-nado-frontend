@@ -23,9 +23,9 @@
 						<img class="header__logo-image" src="<%=require('../images/logo.svg')%>" alt="Film! logo" />
 					</a>
 					<nav class="header__menu">
-						<a class="header__menu-item" href="#">Главная</a>
-						<a class="header__menu-item" href="#">Посмотреть лоты</a>
-						<a class="header__menu-item" href="#">Об аукционе</a>
+						<a class="header__menu-item" href="#hero">Главная</a>
+						<a class="header__menu-item" href="#catalog">Посмотреть лоты</a>
+						<a class="header__menu-item" href="#about">Об аукционе</a>
 					</nav>
 					<button class="header__basket">
 						<span class="header__basket-counter" data-element="basket" data-component="basket">0</span>
@@ -34,18 +34,18 @@
 			</header>
 
 			<main class="page__container">
-				<section class="hero hero_centered">
+				<section class="hero hero_centered" id="hero">
 					<h1 class="hero__title">Оно тебе надо!</h1>
 					<p class="hero__description">Аукцион вещей, в которые никто не верил</p>
 					<img class="hero__background" src="<%=require('../images/ligthning-decor.png')%>" alt="" />
 				</section>
 
-				<section class="catalog">
+				<section class="catalog" id="catalog">
 					<h2 class="catalog__title">Лоты</h2>
 					<div class="catalog__items" data-element="catalog" data-component="catalog"></div>
 				</section>
 
-				<section class="about">
+				<section class="about" id="about">
 					<img class="about__image" src="<%=require('../images/auction.jpg')%>" alt="" />
 					<h2 class="about__title">Об аукционе</h2>
 					<p class="about__description">
@@ -152,9 +152,10 @@
 				</div>
 				<form class="form lot__bid">
 					<label class="form__label form__label_grouped lot__bid-amount">
-						<input class="form__input" type="number" placeholder="Ваша ставка" />
+						<input class="form__input" type="number" placeholder="Ваша ставка" min="1" required />
 					</label>
-					<button class="button">Поставить</button>
+					<button class="form__button button">Поставить</button>
+					<span class="form__errors" style="display: none"></span>
 				</form>
 				<div class="lot__history">
 					<span class="lot__history-caption">Последние ставки:</span>
@@ -212,6 +213,25 @@
 					<span class="card__status"></span>
 				</div>
 			</article>
+		</template>
+
+		<template id="loader">
+			<div class="loader">
+				<div class="loader__icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<div class="loader__text">Результаты загружаются ...</div>
+			</div>
+		</template>
+
+		<template id="error">
+			<div class="state">
+				<h2 class="state__title">Что-то пошло не так</h2>
+				<p class="state__subtitle">Попробуйте обновить страницу и попробовать еще раз</p>
+				<button type="button" class="button state__action">На главную</button>
+			</div>
 		</template>
 	</body>
 </html>

@@ -29,7 +29,7 @@ export class CardModel extends Model<ICardModel> {
 
 	placeBid(value: number) {
 		this.price = value;
-		this.history = [...this.history, this.myBid];
+		this.history = [...this.history.slice(1), value];
 		this.myBid = value;
 
 		if (value > this.minPrice * 10) {

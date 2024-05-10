@@ -94,7 +94,7 @@ export function getObjectProperties(obj: object, filter?: (name: string, prop: P
  */
 export function setElementData<T extends Record<string, unknown> | object>(el: HTMLElement, data: T) {
 	for (const key in data) {
-		el.dataset[key] = String(data[key]);
+		el.setAttribute(key, String(data[key]));
 	}
 }
 

@@ -11,6 +11,7 @@ import { Modal } from './components/common/Modal';
 import { Notify } from './components/common/Notify';
 import { Tabs } from './components/common/Tabs';
 import { Basket } from './components/common/Basket';
+import { Loader } from './components/common/Loader';
 
 import { CardModel } from './components/models/CardModel.js';
 import { AppModel } from './components/models/AppModel';
@@ -41,6 +42,8 @@ const soldTemplate = ensureElement<HTMLTemplateElement>('#sold');
 const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
 const successTemplate = ensureElement<HTMLTemplateElement>('#success');
 const emptyTemplate = ensureElement<HTMLTemplateElement>('#empty');
+const loaderTemplate = ensureElement<HTMLTemplateElement>('#loader');
+const errorTemplate = ensureElement<HTMLTemplateElement>('#error');
 
 const appModel = new AppModel({}, events);
 
@@ -80,6 +83,121 @@ const closedBasket = new Basket(
 	}).render(),
 );
 const order = new Order(cloneTemplate(orderTemplate), events);
+const loader = new Loader(cloneTemplate(loaderTemplate));
+
+const getLostList = () => {
+	page.catalog = [loader.render()];
+
+	api.getLotList()
+		.then((result) => {
+			appModel.setCatalog(result);
+		})
+		.catch(() => {
+			page.catalog = [
+				new Notify(cloneTemplate(errorTemplate), {
+					onClick() {
+						page.catalog = [loader.render()];
+						getLostList();
+					},
+				}).render({
+					buttonText: 'Повторить попытку',
+					buttonModifier: 'outline',
+					text: 'Нажмите на кнопку, чтобы повторить попытку',
+				}),
+			];
+		});
+};
+
+const getLotItem = (item: CardModel, showItem: (item: CardModel) => void) => {
+	modal.render({
+		content: loader.render({ text: 'Карточка аукциона загружается...' }),
+	});
+
+	api.getLotItem(item.id)
+		.then((data: CardModel) => {
+			item.history = data.history;
+			item.description = data.description;
+
+			showItem(item);
+		})
+		.catch(() => {
+			modal.render({
+				content: new Notify(cloneTemplate(errorTemplate), {
+					onClick() {
+						modal.render({
+							content: loader.render({ text: 'Карточка аукциона загружается...' }),
+						});
+						getLotItem(item, showItem);
+					},
+				}).render({
+					buttonText: 'Загрузить карточку аукционно',
+					buttonModifier: 'outline',
+					text: 'Произошла ошибка при загрузке карточки аукциона, попробуйте еще раз',
+				}),
+			});
+		});
+};
+
+const placeBid = (props: CardModel, price: number, auction: AuctionView) => {
+	api.placeBid(props.id, { price })
+		.then(() => {
+			props.placeBid(price);
+			auction.render({
+				status: props.status,
+				time: props.timeStatus,
+				history: props.history,
+				label: props.auctionStatus,
+				nextBid: props.nextBid,
+				buttonText: 'Поставить',
+				buttonDisableState: false,
+			});
+		})
+		.catch(() => {
+			auction.render({
+				status: props.status,
+				time: props.timeStatus,
+				history: props.history,
+				label: props.auctionStatus,
+				nextBid: props.nextBid,
+				buttonText: 'Поставить',
+				buttonDisableState: false,
+				error: 'Что-то пошло не так, попробуйте поставить ставку еще раз',
+			});
+		});
+};
+
+const orderLots = () => {
+	modal.render({
+		content: loader.render({
+			text: 'Происходит отправка формы...',
+		}),
+	});
+	api.orderLots(appModel.order)
+		.then(() => {
+			appModel.clearBasket();
+
+			modal.render({
+				content: successSubmit.render(),
+			});
+		})
+		.catch(() => {
+			modal.render({
+				content: new Notify(cloneTemplate(errorTemplate), {
+					onClick() {
+						modal.render({
+							content: loader.render({
+								text: 'Происходит отправка формы...',
+							}),
+						});
+						orderLots();
+					},
+				}).render({
+					buttonText: 'Отправить форму повторно',
+					text: 'Произошла ошибка при формы заказа, попробуйте еще раз',
+				}),
+			});
+		});
+};
 
 events.on('catalog:changed', () => {
 	page.catalog = appModel.catalog.map((catalogItem) => {
@@ -108,20 +226,7 @@ events.on('card:show-preview', (item: CardModel) => {
 		const cardAuction = new CardAuction(cloneTemplate(cardPreviewTemplate));
 		const auction = new AuctionView(cloneTemplate(auctionTemplate), {
 			onSubmit(price) {
-				api.placeBid(props.id, { price })
-					.then(({ history }) => {
-						props.placeBid(price);
-						auction.render({
-							status: props.status,
-							time: props.timeStatus,
-							history,
-							label: props.auctionStatus,
-							nextBid: props.nextBid,
-						});
-					})
-					.catch((err) => {
-						console.error(err);
-					});
+				placeBid(props, price, auction);
 			},
 		});
 
@@ -146,14 +251,7 @@ events.on('card:show-preview', (item: CardModel) => {
 	};
 
 	if (item) {
-		api.getLotItem(item.id)
-			.then((data: CardModel) => {
-				item.history = data.history;
-				item.description = data.description;
-
-				showItem(item);
-			})
-			.catch((err) => console.error(err));
+		getLotItem(item, showItem);
 	} else {
 		modal.close();
 	}
@@ -251,13 +349,7 @@ events.on('formErrors:change', (errors: Partial<IOrderForm>) => {
 });
 
 events.on('order:submit', () => {
-	api.orderLots(appModel.order).then(() => {
-		appModel.clearBasket();
-
-		modal.render({
-			content: successSubmit.render(),
-		});
-	});
+	orderLots();
 });
 
 events.on('modal:open', () => {
@@ -268,10 +360,4 @@ events.on('modal:close', () => {
 	page.locked = false;
 });
 
-api.getLotList()
-	.then((result) => {
-		appModel.setCatalog(result);
-	})
-	.catch((err) => {
-		console.error(err);
-	});
+getLostList();

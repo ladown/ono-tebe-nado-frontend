@@ -7,11 +7,8 @@
 	"type": "module",
 	"module": "es6",
 	"scripts": {
-		"start": "webpack serve",
-		"watch": "webpack --watch",
+		"dev": "webpack serve",
 		"build": "webpack --mode=production --node-env=production",
-		"build:dev": "webpack --mode=development",
-		"build:prod": "webpack --mode=production --node-env=production",
 		"lint": "eslint --ext .js,.ts ./src",
 		"lint:fix": "npm run lint -- --fix",
 		"format": "prettier ./src --write",
@@ -60,6 +57,5 @@
 		"webpack": "^5.81.0",
 		"webpack-cli": "^5.0.2",
 		"webpack-dev-server": "^4.13.3"
-	},
-	"packageManager": "pnpm@8.15.1+sha1.8adba2d20330c02d3856e18c4eb3819d1d3ca6aa"
+	}
 }

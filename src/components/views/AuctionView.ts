@@ -71,6 +71,10 @@ export class AuctionView extends Component<IAuctionView> {
 		);
 	}
 
+	set nextBid(value: number) {
+		this._input.value = String(value);
+	}
+
 	focus() {
 		this._input.focus({ preventScroll: true });
 	}

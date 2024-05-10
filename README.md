@@ -25,14 +25,21 @@ GitHub Page: [https://ladown.github.io/ono-tebe-nado-frontend/](https://ladown.g
 
 ```
 npm install
-npm run start
+npm run dev
 ```
 
 или
 
 ```
 yarn
-yarn start
+yarn dev
+```
+
+или
+
+```
+pnpm install
+pnpm dev
 ```
 
 ## Сборка
@@ -45,4 +52,10 @@ npm run build
 
 ```
 yarn build
+```
+
+или
+
+```
+pnpm build
 ```

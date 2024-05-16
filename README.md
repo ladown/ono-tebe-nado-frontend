@@ -1,8 +1,8 @@
 # Проектная работа "Оно тебе надо"
 
-Стек: HTML, SCSS, TS, Webpack
-
 GitHub Page: [https://ladown.github.io/ono-tebe-nado-frontend/](https://ladown.github.io/ono-tebe-nado-frontend/)
+
+Стек: HTML, SCSS, TS, Webpack
 
 Структура проекта:
 
